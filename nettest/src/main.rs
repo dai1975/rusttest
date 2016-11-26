@@ -2,8 +2,8 @@ use std::env;
 
 extern crate mio;
 
-mod nettest;
-mod miotest;
+mod net_test;
+mod mio_test;
 
 fn main() {
    let args: Vec<String> = env::args().collect();
@@ -13,8 +13,8 @@ fn main() {
    }
 
    let r = match args[1].as_ref() {
-      "net" => nettest::main(),
-      "mio" => miotest::main(),
+      "net" => net_test::main(),
+      "mio" => mio_test::main(),
       _ => Err(format!("unknown test: {}", args[1]))
    };
    let _ = r.map_err(|s|println!("{}",s));
