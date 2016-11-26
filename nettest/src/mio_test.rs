@@ -4,9 +4,12 @@ use mio::tcp::{ TcpListener, TcpStream };
 use std::str::FromStr;
 use std::io::Read;
 
-pub fn accept() -> Result<TcpStream, String> {
+pub fn bind() -> Result<TcpListener, String> {
    let addr          = try!(std::net::SocketAddr::from_str("127.0.0.1:10000").map_err(|e| format!("parse: {}", e)));
    let listener      = try!(TcpListener::bind(&addr).map_err(|e| format!("bind: {}",e)));
+   return Ok(listener);
+}
+pub fn accept(listener:TcpListener) -> Result<TcpStream, String> {
    let sleeptime = std::time::Duration::from_millis(1);
    loop {
       match listener.accept() {
@@ -25,7 +28,7 @@ pub fn accept() -> Result<TcpStream, String> {
 pub fn main() -> Result<(), String> {
    let poller = mio::Poll::new().unwrap();
    let token_id  = 0;
-   let mut conn: mio::tcp::TcpStream = try!(accept());
+   let mut conn: mio::tcp::TcpStream = try!( bind().and_then(|l| accept(l)) );
    poller.register(&conn, mio::Token(token_id), mio::Ready::readable(), mio::PollOpt::edge()).unwrap();
 
    let mut buf = [0u8; 1024];

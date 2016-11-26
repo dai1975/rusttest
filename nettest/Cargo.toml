@@ -5,3 +5,4 @@ authors = ["KANDA Daisuke <dai1975@gmail.com>"]
 
 [dependencies]
 mio = "0.6.1"
+mioco = "0.8.1"
