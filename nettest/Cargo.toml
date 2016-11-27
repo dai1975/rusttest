@@ -8,4 +8,5 @@ mio = "0.6.1"
 mioco = "0.8.1"
 futures = "0.1.6"
 tokio-core = "0.1.1"
+coio = { git = "https://github.com/zonyitoo/coio-rs.git" }
 
