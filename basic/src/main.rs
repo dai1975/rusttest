@@ -1,5 +1,6 @@
 #![feature(get_type_id)]
 #![feature(associated_consts)]
+#![feature(slice_patterns)]
 //#![feature(box_syntax, box_patterns)]
 
 mod display;
