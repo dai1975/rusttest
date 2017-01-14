@@ -1,6 +1,7 @@
 #![feature(get_type_id)]
 #![feature(associated_consts)]
-#![feature(slice_patterns)]
+#![feature(slice_patterns, advanced_slice_patterns)]
+#![feature(box_syntax)]
 //#![feature(box_syntax, box_patterns)]
 
 mod display;
@@ -31,6 +32,7 @@ mod test_trait_scope;
 mod test_trait_scope_trait;
 mod test_trait_scope_impl;
 mod test_match;
+mod test_ret_refcell;
 
 fn main() {
    test_ownership::t();
@@ -48,7 +50,6 @@ fn main() {
    test_for::t();
    test_mutfor::t();
    test_type::t();
-   test_box::t();
    test_string::t();
    //   test_graph::t();
    test_eq::t();

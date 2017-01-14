@@ -18,6 +18,7 @@ pub fn t() {
    let a16 = 0i16;
    #[allow(unused_variables)]
    let foo:&Foo = &a8;
+   println!("    foo.x() = {}", foo.x());
    //error. インスタンスから assoc const にアクセスはできないようだ。
    //println!("   a8::ID = {}", a8.ID, a8::ID);
    //println!("  foo::ID = {}", foo.ID, foo::ID);

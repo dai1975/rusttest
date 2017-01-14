@@ -57,5 +57,22 @@ mod test_match {
       }
       println!("    {:?}", s); //move check. slice の場合は match 文でエラーになるのでここで利用しなくてもいいが。
    }      
+
+   #[test]
+   fn test_match_subslice() {
+      println!("test_match_subslice");
+      let a:&[u8] = &[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19];
+      print!("  ..: ");
+      match a {
+         &[0,1,2, ref x.., 19] => println!("&[0,1,2,{:?},19]",x),
+         _ => println!("_"),
+      }
+      print!("  [16]: ");
+      match a {
+         &[0,1,2, ref x.., 19] if x.len() == 15 => println!("&[0,1,2,[15]{:?},19]",x),
+         &[0,1,2, ref x.., 19] if x.len() == 16 => println!("&[0,1,2,[16]{:?},19]",x),
+         _ => println!("_"),
+      }
+   }      
 }
 
