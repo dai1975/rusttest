@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod test_match {
    #[derive(Debug)] struct X(i32);
+   #[derive(Debug)] struct Y(i16);
    #[derive(Debug)] struct A(X,X,X,X,X);
    #[test]
    fn test_match_tuple_struct() {
@@ -17,6 +18,16 @@ mod test_match {
       }
       println!("    {:?}", t); //move check
 
+      print!("  tuple complex type: ");
+      let t = (X(0),X(1),X(-2),X(3),Y(4));
+      match t {
+         //(X(0), ref x, X(2), _, X(_)) => println!("(0,{:?},_,_,X)",x),
+           (X(0), ref x, X(2), _, Y(_)) => println!("(0,{:?},_,_,Y)",x),
+           (X(0), ref x, ..)         => println!("(0,{:?},...)",x),
+         _ => println!("_"),
+      }
+      println!("    {:?}", t); //move check
+      
       print!("  struct: ");
       let a = A(X(0),X(1),X(-2),X(3),X(4));
       match a {
@@ -49,7 +60,7 @@ mod test_match {
       match s {
          //&[X(0), x, X(2), _, _]    => println!("&[0,{:?},_,_,_]",x), //match全体で borrow してるので、move エラー。
          &[X(0), ref x, X(2), _, _]         => println!("&[0,{:?},_,_,_]",x),
-         &[X(0), ref x, X(2), _, _, _]      => println!("&[0,{:?},_,_,_,_]",x), //ok. slice では数は違っても通る
+         &[X(0), ref x, X(2), _, _, _]      => println!("&[0,{:?},_,_,_,_]",x), //ok. slice では数は違ってもコンパイル通る
          &[X(0), ref x, X(-2), _, _, ref y] => println!("&[0,{:?},_,_,_,{:?}]",x,y), //でも不一致
          &[X(0), ref x, X(-2), ref y]       => println!("&[0,{:?},_,{:?}]",x,y),  //不足でも不一致
          &[X(0), ref x, ..]                 => println!("&[0,{:?},...]",x),
@@ -71,6 +82,23 @@ mod test_match {
       match a {
          &[0,1,2, ref x.., 19] if x.len() == 15 => println!("&[0,1,2,[15]{:?},19]",x),
          &[0,1,2, ref x.., 19] if x.len() == 16 => println!("&[0,1,2,[16]{:?},19]",x),
+         _ => println!("_"),
+      }
+   }      
+
+   enum E {
+      EX(i32, Box<[X]>),
+      EY(i32, Box<[Y]>),
+      EA(i32, A),
+   }
+   #[test]
+   fn test_match_enum() {
+      println!("test_match_enum");
+      let y:E = E::EY(0, box [Y(0),Y(1),Y(-2),Y(3),Y(4)]);
+      match y {
+         E::EX(_, box [X(0), ref x, X(2), _, _])  => println!("X[0,{:?},_,_,_]",x), 
+         E::EY(_, box [Y(0), ref x, Y(2), _, _])  => println!("Y[0,{:?},_,_,_]",x), 
+         E::EA(_, A(X(0), ref x, X(2), _, _)) => println!("A[0,{:?},_,_,_]",x), 
          _ => println!("_"),
       }
    }      

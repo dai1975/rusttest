@@ -2,7 +2,7 @@
 #![feature(associated_consts)]
 #![feature(slice_patterns, advanced_slice_patterns)]
 #![feature(box_syntax)]
-//#![feature(box_syntax, box_patterns)]
+#![feature(box_patterns)]
 
 mod display;
 
@@ -33,6 +33,9 @@ mod test_trait_scope_trait;
 mod test_trait_scope_impl;
 mod test_match;
 mod test_ret_refcell;
+mod test_update;
+mod test_cursor;
+mod test_self_implref;
 
 fn main() {
    test_ownership::t();
