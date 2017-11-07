@@ -1,30 +1,40 @@
 trait Foo {
-   const ID:i32 = 1;
-   fn x(&self) -> i32 { Self::ID }
+   const ID:&'static str = "Foo";
+   fn x(&self) -> &str { Self::ID }
+}
+trait Bar {
+   const ID:&'static str = "Bar";
+   fn x(&self) -> &str { Self::ID }
 }
 
 impl Foo for i8 {
+   const ID:&'static str = "Foo(i8)";
 }
-impl Foo for i16 {
-   const ID:i32 = 2;
+impl Bar for i16 {
 }
 
-pub fn t() {
+#[test]
+pub fn test_assoc_const_1() {
    println!("assoc_const");
-   println!("   i8::ID = {}", i8::ID);
-   println!("  i16::ID = {}", i16::ID);
+   assert_eq!(i8::ID, "Foo(i8)");
 
-   let a8  = 0i8;
-   let a16 = 0i16;
-   #[allow(unused_variables)]
-   let foo:&Foo = &a8;
-   println!("    foo.x() = {}", foo.x());
+   let a = 0i8;
+   //error[E0038]: the trait `test_assoc_const::Foo` cannot be made into an object
+   // = note: the trait cannot contain associated consts like `ID`
+   //let foo:&Foo = &a as &Foo;
    //error. インスタンスから assoc const にアクセスはできないようだ。
-   //println!("   a8::ID = {}", a8.ID, a8::ID);
-   //println!("  foo::ID = {}", foo.ID, foo::ID);
+   //println!("  a.ID = {}", a.ID);
    //ok. これならアクセスできる
-   println!("    a8.x() = {}", a8.x());
-   println!("   a16.x() = {}", a16.x());
+   assert_eq!(a.x(), "Foo(i8)")
+}
+
+#[test]
+pub fn test_assoc_const_2() {
+   println!("assoc_const");
+   assert_eq!(i16::ID, "Bar");
+
+   let a = 0i16;
+   assert_eq!(a.x(), "Bar")
 }
 
 

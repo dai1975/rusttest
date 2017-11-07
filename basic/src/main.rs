@@ -57,6 +57,5 @@ fn main() {
    //   test_graph::t();
    test_eq::t();
    test_any::t();
-   test_assoc_const::t();
    test_trait_scope::t();
 }
