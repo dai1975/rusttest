@@ -3,6 +3,7 @@
 #![feature(slice_patterns, advanced_slice_patterns)]
 #![feature(box_syntax)]
 #![feature(box_patterns)]
+#![feature(core_intrinsics)]
 
 mod display;
 
@@ -36,6 +37,7 @@ mod test_ret_refcell;
 mod test_update;
 mod test_cursor;
 mod test_self_implref;
+mod test_cow;
 
 fn main() {
    test_ownership::t();
