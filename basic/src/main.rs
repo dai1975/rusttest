@@ -32,11 +32,15 @@ mod test_assoc_const;
 mod test_trait_scope;
 mod test_trait_scope_trait;
 mod test_trait_scope_impl;
+mod test_trait_multiimpl;
 mod test_match;
 mod test_ret_refcell;
 mod test_update;
 mod test_cursor;
 mod test_self_implref;
+mod test_enum;
+mod test_enum2;
+mod test_borrowtrait;
 mod test_cow;
 
 fn main() {

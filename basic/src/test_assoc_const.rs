@@ -19,9 +19,11 @@ pub fn test_assoc_const_1() {
    assert_eq!(i8::ID, "Foo(i8)");
 
    let a = 0i8;
+   //2017年春頃にエラーになった:
    //error[E0038]: the trait `test_assoc_const::Foo` cannot be made into an object
    // = note: the trait cannot contain associated consts like `ID`
    //let foo:&Foo = &a as &Foo;
+
    //error. インスタンスから assoc const にアクセスはできないようだ。
    //println!("  a.ID = {}", a.ID);
    //ok. これならアクセスできる
