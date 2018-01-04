@@ -4,6 +4,7 @@
 #![feature(box_syntax)]
 #![feature(box_patterns)]
 #![feature(core_intrinsics)]
+#[macro_use] extern crate assert_matches;
 
 mod display;
 
@@ -42,6 +43,8 @@ mod test_enum;
 mod test_enum2;
 mod test_borrowtrait;
 mod test_cow;
+mod test_index;
+mod test_parsenum;
 
 fn main() {
    test_ownership::t();

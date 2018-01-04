@@ -23,7 +23,7 @@ macro_rules! assert_ptr_ne (
 );
 
 #[test]
-fn test_cow() {
+fn test_cow_into_owned() {
    println!("cow");
    let a = [0u8; 10];
    let p = &a as *const [u8];
@@ -55,6 +55,28 @@ fn test_cow() {
       let c = Cow::from(c.into_owned());
       let y = get_ptr(&c);
       println!("  p={:?}, q={:?}, x={:?}, y={:?}", p, q, x, y);
+      assert_eq!(x, y);
+   }
+}
+
+#[test]
+fn test_cow_clone() {
+   println!("cow clone");
+   let a = [0u8; 10];
+   let p = &a as *const [u8];
+   let q = &a[0..3] as *const [u8];
+   {
+      let c = Cow::from(&a[0..3]);
+      assert_eq!(false, is_owned(&c));
+      let x = get_ptr(&c);
+      assert_eq!(q, x);
+      assert_ptr_eq!(p, x);
+      
+      let d = c.clone();
+      assert_eq!(false, is_owned(&d));
+      let y = get_ptr(&d);
+      assert_eq!(q, y);
+      assert_ptr_eq!(p, y);
       assert_eq!(x, y);
    }
 }
