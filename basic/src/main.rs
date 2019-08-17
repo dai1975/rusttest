@@ -46,6 +46,7 @@ mod test_cow;
 mod test_index;
 mod test_parsenum;
 mod test_rebind;
+mod test_read_cursor;
 
 fn main() {
    test_ownership::t();
