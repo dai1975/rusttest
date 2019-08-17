@@ -2,7 +2,7 @@
 use std::any::{Any};
 
 fn test_typeid<T:Any>(prefix:&str, a:&T) {
-   println!("  {}: {:?}", prefix, a.get_type_id());
+   println!("  {}: {:?}", prefix, a.type_id());
 }
 
 #[allow(dead_code)]
