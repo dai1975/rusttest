@@ -1,6 +1,6 @@
 #![feature(get_type_id)]
 #![feature(associated_consts)]
-#![feature(slice_patterns, advanced_slice_patterns)]
+#![feature(slice_patterns)]
 #![feature(box_syntax)]
 #![feature(box_patterns)]
 #![feature(core_intrinsics)]
@@ -45,6 +45,7 @@ mod test_borrowtrait;
 mod test_cow;
 mod test_index;
 mod test_parsenum;
+mod test_rebind;
 
 fn main() {
    test_ownership::t();
